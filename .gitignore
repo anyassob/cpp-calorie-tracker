@@ -1,0 +1,21 @@
+# Build directories
+build/
+cmake-build-*/
+cmake-build-debug/
+cmake-build-release/
+CMakeCache.txt
+CMakeFiles/
+
+# CLion
+.idea/
+*.iml
+
+# Compiled files
+*.o
+*.obj
+*.exe
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
