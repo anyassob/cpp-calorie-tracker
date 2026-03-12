@@ -23,4 +23,7 @@ public:
     std::string getDescription() const override;
     void updatePortion(double multiplier) override;
     std::unique_ptr<FoodItem> clone() const override;
+
+    double getPortionMultiplier() const noexcept;
+    void setPortionMultiplier(double multiplier);
 };
