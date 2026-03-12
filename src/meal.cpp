@@ -20,3 +20,10 @@ void Meal::addFood(std::unique_ptr<FoodItem> food) {
     }
     items.push_back(std::move(food));
 }
+
+double Meal::getTotalCalories() const {
+    return std::accumulate(items.begin(), items.end(), 0.0,
+        [](double sum, const auto& item) {
+            return sum + item->getCalories();
+        });
+}
