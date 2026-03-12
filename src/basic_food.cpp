@@ -31,3 +31,14 @@ double BasicFood::getCarbs() const noexcept {
 double BasicFood::getCalories() const noexcept {
     return (protein * 4.0 + fat * 9.0 + carbs * 4.0) * portionMultiplier;
 }
+
+std::string BasicFood::getDescription() const {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(1);
+    oss << name << " ("
+        << (protein * portionMultiplier) << "g protein, "
+        << (fat * portionMultiplier) << "g fat, "
+        << (carbs * portionMultiplier) << "g carbs, "
+        << getCalories() << " kcal)";
+    return oss.str();
+}
