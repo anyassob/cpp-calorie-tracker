@@ -1,5 +1,5 @@
 ﻿#include "meal.h"
-#include "exceptions.h"
+#include "../include/exceptions.h"
 #include <numeric>
 
 Meal::Meal(std::string name)
@@ -12,4 +12,11 @@ std::string Meal::getName() const noexcept {
 
 std::chrono::system_clock::time_point Meal::getTime() const noexcept {
     return time;
+}
+
+void Meal::addFood(std::unique_ptr<FoodItem> food) {
+    if (!food) {
+        throw ValidationException("Food item cannot be null");
+    }
+    items.push_back(std::move(food));
 }
