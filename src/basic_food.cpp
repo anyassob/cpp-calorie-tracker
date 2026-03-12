@@ -53,3 +53,14 @@ void BasicFood::updatePortion(double multiplier) {
 std::unique_ptr<FoodItem> BasicFood::clone() const {
     return std::make_unique<BasicFood>(*this);
 }
+
+double BasicFood::getPortionMultiplier() const noexcept {
+    return portionMultiplier;
+}
+
+void BasicFood::setPortionMultiplier(double multiplier) {
+    if (multiplier <= 0) {
+        throw ValidationException("Portion multiplier must be positive");
+    }
+    portionMultiplier = multiplier;
+}
