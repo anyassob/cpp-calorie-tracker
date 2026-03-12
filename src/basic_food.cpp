@@ -22,3 +22,7 @@ double BasicFood::getFat() const noexcept {
 double BasicFood::getCarbs() const noexcept {
     return carbs * portionMultiplier;
 }
+
+double BasicFood::getCalories() const noexcept {
+    return (protein * 4.0 + fat * 9.0 + carbs * 4.0) * portionMultiplier;
+}
