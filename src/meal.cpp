@@ -27,3 +27,11 @@ double Meal::getTotalCalories() const {
             return sum + item->getCalories();
         });
 }
+
+double Meal::getTotalProtein() const {
+    double total = 0.0;
+    for (const auto& item : items) {
+        total += item->getProtein();
+    }
+    return total;
+}
