@@ -42,3 +42,10 @@ std::string BasicFood::getDescription() const {
         << getCalories() << " kcal)";
     return oss.str();
 }
+
+void BasicFood::updatePortion(double multiplier) {
+    if (multiplier <= 0) {
+        throw ValidationException("Portion multiplier must be positive");
+    }
+    portionMultiplier *= multiplier;
+}
