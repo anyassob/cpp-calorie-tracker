@@ -49,3 +49,7 @@ void BasicFood::updatePortion(double multiplier) {
     }
     portionMultiplier *= multiplier;
 }
+
+std::unique_ptr<FoodItem> BasicFood::clone() const {
+    return std::make_unique<BasicFood>(*this);
+}
