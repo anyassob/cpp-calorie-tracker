@@ -35,3 +35,4 @@ double Meal::getTotalProtein() const {
     }
     return total;
 }
+
