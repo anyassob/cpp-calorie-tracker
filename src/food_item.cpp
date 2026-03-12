@@ -1,4 +1,4 @@
-#include "food_item.h"
+#include "../include/food_item.h"
 
 std::optional<double> FoodItem::getNutrient(std::string_view nutrientName) const noexcept {
     if (nutrientName == "calories") return getCalories();

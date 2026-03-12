@@ -1,3 +1,4 @@
+#include "../include/exceptions.h"
 #include "../include/basic_food.h"
 
 BasicFood::BasicFood(std::string name, double protein, double fat, double carbs, double portionMultiplier)
