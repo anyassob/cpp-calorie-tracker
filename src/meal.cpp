@@ -36,3 +36,10 @@ double Meal::getTotalProtein() const {
     return total;
 }
 
+double Meal::getTotalFat() const {
+    double total = 0.0;
+    for (const auto& item : items) {
+        total += item->getFat();
+    }
+    return total;
+}
