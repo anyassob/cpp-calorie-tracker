@@ -43,3 +43,11 @@ double Meal::getTotalFat() const {
     }
     return total;
 }
+
+double Meal::getTotalCarbs() const {
+    double total = 0.0;
+    for (const auto& item : items) {
+        total += item->getCarbs();
+    }
+    return total;
+}
