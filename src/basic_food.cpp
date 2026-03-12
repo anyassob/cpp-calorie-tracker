@@ -1,12 +1,16 @@
 #include "../include/exceptions.h"
 #include "../include/basic_food.h"
+#include <sstream>
+#include <iomanip>
 
 BasicFood::BasicFood(std::string name, double protein, double fat, double carbs, double portionMultiplier)
     : name(std::move(name))
     , protein(protein)
     , fat(fat)
     , carbs(carbs)
-    , portionMultiplier(portionMultiplier) {}
+, portionMultiplier(portionMultiplier) { if (protein < 0 || fat < 0 || carbs < 0 || portionMultiplier <= 0) {
+    throw ValidationException("Nutrient values and portion multiplier must be positive");
+}}
 
 std::string BasicFood::getName() const noexcept {
     return name;
