@@ -95,3 +95,15 @@ void CalorieTracker::addMeal(std::unique_ptr<Meal> meal) {
     if (!meal) throw ValidationException("Meal cannot be null");
     meals.push_back(std::move(meal));
 }
+
+std::optional<Statistics::DailySummary> CalorieTracker::getTodaysSummary() const {
+    if (meals.empty()) return std::nullopt;
+    auto now = std::chrono::system_clock::now();
+    Statistics stats(meals);
+    return stats.getDailySummary(now);
+}
+
+double CalorieTracker::getTotalCaloriesForDay(std::chrono::system_clock::time_point day) const {
+    Statistics stats(meals);
+    return stats.getDailySummary(day).totalCalories;
+}
