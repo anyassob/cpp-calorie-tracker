@@ -53,3 +53,16 @@ Statistics::getWeeklySummary(std::chrono::system_clock::time_point startDate) co
 
     return weeklyData;
 }
+std::optional<double> Statistics::getProgressToGoal(double dailyGoal,
+                                                    std::chrono::system_clock::time_point day) const {
+    if (dailyGoal <= 0) {
+        return std::nullopt;
+    }
+
+    auto summary = getDailySummary(day);
+    if (summary.mealCount == 0) {
+        return 0.0;
+    }
+
+    return (summary.totalCalories / dailyGoal) * 100.0;
+}
