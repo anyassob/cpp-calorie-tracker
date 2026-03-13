@@ -54,3 +54,50 @@ std::optional<std::string> DataManager::loadFromFile(const std::string& filename
         throw FileIOException(filename);
     }
 }
+
+void DataManager::saveUserProfile(const UserProfile& profile) {
+    std::ostringstream oss;
+    oss << profile.getName() << "\n"
+        << profile.getWeight() << "\n"
+        << profile.getHeight() << "\n"
+        << profile.getAge() << "\n"
+        << profile.getGender() << "\n";
+    
+    auto goal = profile.getDailyCalorieGoal();
+    if (goal.has_value()) {
+        oss << goal.value();
+    } else {
+        oss << "none";
+    }
+    
+    if (!saveToFile("user_" + profile.getName() + ".txt", oss.str())) {
+        throw FileIOException("user_" + profile.getName() + ".txt");
+    }
+}
+
+std::optional<UserProfile> DataManager::loadUserProfile(const std::string& username) {
+    auto content = loadFromFile("user_" + username + ".txt");
+    if (!content.has_value()) {
+        return std::nullopt;
+    }
+    
+    std::istringstream iss(content.value());
+    std::string name;
+    double weight, height;
+    int age;
+    char gender;
+    std::string goalStr;
+    
+    std::getline(iss, name);
+    iss >> weight >> height >> age >> gender;
+    iss.ignore();
+    std::getline(iss, goalStr);
+    
+    UserProfile profile(name, weight, height, age, gender);
+    
+    if (goalStr != "none") {
+        profile.setDailyCalorieGoal(std::stod(goalStr));
+    }
+    
+    return profile;
+}
