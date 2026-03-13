@@ -101,3 +101,36 @@ std::optional<UserProfile> DataManager::loadUserProfile(const std::string& usern
     
     return profile;
 }
+
+void DataManager::saveMeals(const std::vector<std::unique_ptr<Meal>>& meals, const std::string& username) {
+    std::ostringstream oss;
+    oss << meals.size() << "\n";
+    for (const auto& meal : meals) {
+        oss << meal->getName() << "\n";
+    }
+    
+    if (!saveToFile(username + "_meals.txt", oss.str())) {
+        throw FileIOException(username + "_meals.txt");
+    }
+}
+
+std::optional<std::vector<std::unique_ptr<Meal>>> DataManager::loadMeals(const std::string& username) {
+    auto content = loadFromFile(username + "_meals.txt");
+    if (!content.has_value()) {
+        return std::nullopt;
+    }
+    
+    std::vector<std::unique_ptr<Meal>> meals;
+    std::istringstream iss(content.value());
+    size_t count;
+    iss >> count;
+    iss.ignore();
+    
+    for (size_t i = 0; i < count; ++i) {
+        std::string mealName;
+        std::getline(iss, mealName);
+        meals.push_back(std::make_unique<Meal>(mealName));
+    }
+    
+    return meals;
+}
