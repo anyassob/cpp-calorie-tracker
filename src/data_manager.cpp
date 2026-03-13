@@ -1,0 +1,56 @@
+#include "data_manager.h"
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+namespace fs = std::filesystem;
+
+DataManager::DataManager(std::string directory) 
+    : dataDirectory(std::move(directory)) {
+    
+    try {
+        if (!fs::exists(dataDirectory)) {
+            fs::create_directories(dataDirectory);
+        }
+    } catch (const fs::filesystem_error& e) {
+        throw FileIOException(dataDirectory);
+    }
+}
+
+bool DataManager::saveToFile(const std::string& filename, const std::string& content) {
+    std::string fullPath = dataDirectory + "/" + filename;
+    
+    try {
+        std::ofstream file(fullPath);
+        if (!file.is_open()) {
+            return false;
+        }
+        
+        file << content;
+        return file.good();
+    } catch (const std::exception& e) {
+        throw FileIOException(filename);
+    }
+}
+
+std::optional<std::string> DataManager::loadFromFile(const std::string& filename) {
+    std::string fullPath = dataDirectory + "/" + filename;
+    
+    try {
+        if (!fs::exists(fullPath)) {
+            return std::nullopt;
+        }
+        
+        std::ifstream file(fullPath);
+        if (!file.is_open()) {
+            return std::nullopt;
+        }
+        
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        return buffer.str();
+    } catch (const std::exception& e) {
+        throw FileIOException(filename);
+    }
+}
