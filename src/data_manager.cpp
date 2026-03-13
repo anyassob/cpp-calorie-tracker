@@ -134,3 +134,23 @@ std::optional<std::vector<std::unique_ptr<Meal>>> DataManager::loadMeals(const s
     
     return meals;
 }
+
+void DataManager::saveFoodDatabase(const std::vector<std::shared_ptr<FoodItem>>& foods, const std::string& username) {
+    std::ostringstream oss;
+    oss << foods.size() << "\n";
+    
+    for (const auto& food : foods) {
+        if (auto basicFood = std::dynamic_pointer_cast<BasicFood>(food)) {
+            oss << "BASIC\n";
+            oss << basicFood->getName() << "\n";
+            oss << basicFood->getProtein() << " "
+                << basicFood->getFat() << " "
+                << basicFood->getCarbs() << " "
+                << "1.0\n";
+        }
+    }
+    
+    if (!saveToFile(username + "_foods.txt", oss.str())) {
+        throw FileIOException(username + "_foods.txt");
+    }
+}
