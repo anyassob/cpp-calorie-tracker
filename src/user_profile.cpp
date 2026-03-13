@@ -1,5 +1,6 @@
 #include "../include/user_profile.h"
 #include <cmath>
+#include "exceptions.h"
 
 UserProfile::UserProfile(std::string name, double weight, double height, int age, char gender)
         : name(std::move(name))
