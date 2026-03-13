@@ -72,3 +72,26 @@ void CalorieTracker::saveData() {
     dataManager->saveFoodDatabase(foodDatabase, currentUsername);
     std::cout << "💾 Data saved for user: " << currentUsername << std::endl;
 }
+
+void CalorieTracker::setUserProfile(std::unique_ptr<UserProfile> newUser) {
+    if (!newUser) throw ValidationException("User profile cannot be null");
+    user = std::move(newUser);
+    currentUsername = user->getName();
+}
+
+void CalorieTracker::addToFoodDatabase(std::shared_ptr<FoodItem> food) {
+    if (!food) throw ValidationException("Food item cannot be null");
+    foodDatabase.push_back(std::move(food));
+}
+
+std::optional<std::shared_ptr<FoodItem>> CalorieTracker::findFoodInDatabase(std::string_view name) const {
+    auto it = std::find_if(foodDatabase.begin(), foodDatabase.end(),
+        [name](const auto& food) { return food->getName() == name; });
+    if (it != foodDatabase.end()) return *it;
+    return std::nullopt;
+}
+
+void CalorieTracker::addMeal(std::unique_ptr<Meal> meal) {
+    if (!meal) throw ValidationException("Meal cannot be null");
+    meals.push_back(std::move(meal));
+}
