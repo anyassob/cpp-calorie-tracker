@@ -154,3 +154,38 @@ void DataManager::saveFoodDatabase(const std::vector<std::shared_ptr<FoodItem>>&
         throw FileIOException(username + "_foods.txt");
     }
 }
+
+std::optional<std::vector<std::shared_ptr<FoodItem>>> DataManager::loadFoodDatabase(const std::string& username) {
+    auto content = loadFromFile(username + "_foods.txt");
+    if (!content.has_value()) {
+        return std::nullopt;
+    }
+    
+    std::vector<std::shared_ptr<FoodItem>> foods;
+    std::istringstream iss(content.value());
+    size_t count;
+    iss >> count;
+    iss.ignore();
+    
+    for (size_t i = 0; i < count; ++i) {
+        std::string type;
+        std::getline(iss, type);
+        
+        if (type == "BASIC") {
+            std::string name;
+            double protein, fat, carbs, multiplier;
+            
+            std::getline(iss, name);
+            iss >> protein >> fat >> carbs >> multiplier;
+            iss.ignore();
+            
+            foods.push_back(std::make_shared<BasicFood>(name, protein, fat, carbs, 1.0));
+        }
+    }
+    
+    return foods;
+}
+
+bool DataManager::dataExists(const std::string& key) const {
+    return fs::exists(dataDirectory + "/" + key);
+}
