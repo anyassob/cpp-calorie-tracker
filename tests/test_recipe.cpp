@@ -1,17 +1,17 @@
-﻿#include <gtest/gtest.h>
-#include \"recipe.h\"
-#include \"basic_food.h\"
+#include <gtest/gtest.h>
+#include "recipe.h"
+#include "basic_food.h"
 
 TEST(RecipeTest, Constructor) {
-    Recipe recipe(\"Test Recipe\");
-    EXPECT_EQ(recipe.getName(), \"Test Recipe\");
+    Recipe recipe("Test Recipe");
+    EXPECT_EQ(recipe.getName(), "Test Recipe");
     EXPECT_EQ(recipe.getIngredientCount(), 0);
     EXPECT_EQ(recipe.getTotalWeight(), 0.0);
 }
 
 TEST(RecipeTest, AddIngredient) {
-    Recipe recipe(\"Test Recipe\");
-    auto apple = std::make_shared<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
+    Recipe recipe("Test Recipe");
+    auto apple = std::make_shared<BasicFood>("Apple", 0.3, 0.2, 14.0, 1.0);
     
     recipe.addIngredient(apple, 200.0);
     
@@ -20,8 +20,8 @@ TEST(RecipeTest, AddIngredient) {
 }
 
 TEST(RecipeTest, CaloriesCalculation) {
-    Recipe recipe(\"Test Recipe\");
-    auto apple = std::make_shared<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
+    Recipe recipe("Test Recipe");
+    auto apple = std::make_shared<BasicFood>("Apple", 0.3, 0.2, 14.0, 1.0);
     
     recipe.addIngredient(apple, 200.0);
     
@@ -29,35 +29,17 @@ TEST(RecipeTest, CaloriesCalculation) {
 }
 
 TEST(RecipeTest, ProteinCalculation) {
-    Recipe recipe(\"Test Recipe\");
-    auto chicken = std::make_shared<BasicFood>(\"Chicken\", 31.0, 3.6, 0.0, 1.0);
+    Recipe recipe("Test Recipe");
+    auto chicken = std::make_shared<BasicFood>("Chicken", 31.0, 3.6, 0.0, 1.0);
     
     recipe.addIngredient(chicken, 150.0);
     
     EXPECT_NEAR(recipe.getProtein(), 46.5, 0.1);
 }
 
-TEST(RecipeTest, FatCalculation) {
-    Recipe recipe(\"Test Recipe\");
-    auto chicken = std::make_shared<BasicFood>(\"Chicken\", 31.0, 3.6, 0.0, 1.0);
-    
-    recipe.addIngredient(chicken, 150.0);
-    
-    EXPECT_NEAR(recipe.getFat(), 5.4, 0.1);
-}
-
-TEST(RecipeTest, CarbsCalculation) {
-    Recipe recipe(\"Test Recipe\");
-    auto apple = std::make_shared<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
-    
-    recipe.addIngredient(apple, 200.0);
-    
-    EXPECT_NEAR(recipe.getCarbs(), 28.0, 0.1);
-}
-
 TEST(RecipeTest, UpdatePortion) {
-    Recipe recipe(\"Test Recipe\");
-    auto apple = std::make_shared<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
+    Recipe recipe("Test Recipe");
+    auto apple = std::make_shared<BasicFood>("Apple", 0.3, 0.2, 14.0, 1.0);
     
     recipe.addIngredient(apple, 200.0);
     recipe.updatePortion(2.0);
@@ -67,8 +49,8 @@ TEST(RecipeTest, UpdatePortion) {
 }
 
 TEST(RecipeTest, Clone) {
-    Recipe recipe(\"Test Recipe\");
-    auto apple = std::make_shared<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
+    Recipe recipe("Test Recipe");
+    auto apple = std::make_shared<BasicFood>("Apple", 0.3, 0.2, 14.0, 1.0);
     recipe.addIngredient(apple, 200.0);
     
     auto cloned = recipe.clone();

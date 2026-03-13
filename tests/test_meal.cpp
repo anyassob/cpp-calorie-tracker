@@ -1,16 +1,16 @@
-﻿#include <gtest/gtest.h>
-#include \"meal.h\"
-#include \"basic_food.h\"
-#include \"exceptions.h\"
+#include <gtest/gtest.h>
+#include "meal.h"
+#include "basic_food.h"
+#include "exceptions.h"
 
 TEST(MealTest, Constructor) {
-    Meal meal(\"Breakfast\");
-    EXPECT_EQ(meal.getName(), \"Breakfast\");
+    Meal meal("Breakfast");
+    EXPECT_EQ(meal.getName(), "Breakfast");
 }
 
 TEST(MealTest, AddFood) {
-    Meal meal(\"Breakfast\");
-    auto apple = std::make_unique<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
+    Meal meal("Breakfast");
+    auto apple = std::make_unique<BasicFood>("Apple", 0.3, 0.2, 14.0, 1.0);
     
     meal.addFood(std::move(apple));
     
@@ -18,9 +18,9 @@ TEST(MealTest, AddFood) {
 }
 
 TEST(MealTest, MultipleFoods) {
-    Meal meal(\"Breakfast\");
-    auto apple = std::make_unique<BasicFood>(\"Apple\", 0.3, 0.2, 14.0, 1.0);
-    auto bread = std::make_unique<BasicFood>(\"Bread\", 9.0, 3.0, 49.0, 1.0);
+    Meal meal("Breakfast");
+    auto apple = std::make_unique<BasicFood>("Apple", 0.3, 0.2, 14.0, 1.0);
+    auto bread = std::make_unique<BasicFood>("Bread", 9.0, 3.0, 49.0, 1.0);
     
     meal.addFood(std::move(apple));
     meal.addFood(std::move(bread));
@@ -32,7 +32,7 @@ TEST(MealTest, MultipleFoods) {
 }
 
 TEST(MealTest, EmptyMeal) {
-    Meal meal(\"Empty\");
+    Meal meal("Empty");
     EXPECT_DOUBLE_EQ(meal.getTotalCalories(), 0.0);
     EXPECT_DOUBLE_EQ(meal.getTotalProtein(), 0.0);
     EXPECT_DOUBLE_EQ(meal.getTotalFat(), 0.0);
@@ -40,6 +40,6 @@ TEST(MealTest, EmptyMeal) {
 }
 
 TEST(MealTest, InvalidFoodThrows) {
-    Meal meal(\"Breakfast\");
+    Meal meal("Breakfast");
     EXPECT_THROW(meal.addFood(nullptr), ValidationException);
 }

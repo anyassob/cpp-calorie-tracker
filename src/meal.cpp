@@ -1,5 +1,5 @@
-﻿#include "meal.h"
-#include "../include/exceptions.h"
+#include "meal.h"
+#include "exceptions.h"
 #include <numeric>
 
 Meal::Meal(std::string name)
@@ -21,14 +21,14 @@ void Meal::addFood(std::unique_ptr<FoodItem> food) {
     items.push_back(std::move(food));
 }
 
-double Meal::getTotalCalories() const {
+double Meal::getTotalCalories() const noexcept {
     return std::accumulate(items.begin(), items.end(), 0.0,
         [](double sum, const auto& item) {
             return sum + item->getCalories();
         });
 }
 
-double Meal::getTotalProtein() const {
+double Meal::getTotalProtein() const noexcept {
     double total = 0.0;
     for (const auto& item : items) {
         total += item->getProtein();
@@ -36,7 +36,7 @@ double Meal::getTotalProtein() const {
     return total;
 }
 
-double Meal::getTotalFat() const {
+double Meal::getTotalFat() const noexcept {
     double total = 0.0;
     for (const auto& item : items) {
         total += item->getFat();
@@ -44,7 +44,7 @@ double Meal::getTotalFat() const {
     return total;
 }
 
-double Meal::getTotalCarbs() const {
+double Meal::getTotalCarbs() const noexcept {
     double total = 0.0;
     for (const auto& item : items) {
         total += item->getCarbs();

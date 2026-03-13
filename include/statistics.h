@@ -4,6 +4,7 @@
 #include <memory>
 #include <chrono>
 #include <map>
+#include "meal.h"
 #include <optional>
 #include <functional>
 
